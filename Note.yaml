@@ -1,0 +1,94 @@
+## Instalacion de Garnache 
+https://trufflesuite.com/docs/ganache/
+
+## Instalcion de Truffle
+https://trufflesuite.com/docs/truffle/how-to/install/
+
+> Comando
+npm install -g truffle
+
+
+### Vamos iniciar la red 
+
+> vamos a crear nuestro proyecto con el siguinte comando 
+mkdir MetaCoin
+cd MetaCoin
+truffle unbox metacoin
+
+> Si quieres crear tu blockchain sin un contrado inteligente 
+truffle init metacoin
+
+### Debemos unir Truffle con Ganache
+
+
+> Abrimos "truffle-config.js" con nuestro editor. 
+> Reemplazamos el contendo con la informacion correspondiente con el numero de puerto de Garnache
+
+module.exports = {
+  networks: {
+    development: {
+      host: "127.0.0.1",
+      port: 7545,
+      network_id: "*"
+    }
+  }
+};
+
+## Ejecucion 
+
+> Para comprobar que nuestro contrato inteligente esta funcionado (Truffle debugger)
+
+truffle compile
+
+> Para ejecutar nuesrtro contrato inteligente localmente (sin Ganache) sin una configuracion de puertos
+> sin una red de Ethereum 
+
+truffle develop
+
+> Para ejecutar nuestro contrato inteligente, con una red de Ethereum y tengamos en tiempo real las transaciones 
+> usando Garnache y Truffle
+
+truffle migrate
+
+
+## Revisar la Documentacion
+https://trufflesuite.com/docs/truffle/quickstart/
+
+
+
+
+### Ejecucion por consola 
+> Vamos a entrara a la consula de Truffle
+
+truffle consule
+
+> Tenemos que guardar nuesto contrato inteligente en una variable
+
+contrato = await TaskContract.deployed()
+
+> Ahora "contrato" tiene nuestra blockchain, con esto podemos ingresar a la declaracion de Variables y funciones 
+
+> Funciones
+tareas  = await contrato.tasks(0)
+
+> Variables
+variable1 = await contrato.TaskCount()
+> OJO Return 
+BN { negative: 0, words: [ 0, <1 empty item> ], length: 1, red: null }
+> Procesar
+variable1.toNumber()
+0
+
+
+> Vamos a guardar valores en la blockchain
+
+contrato.createTask("tarea2","Programacion en Python")
+
+> Vamos a mostrar los valores 
+
+tarea1 = await contrato.tasks(0)
+
+
+> vamos a ver los valors en el logs
+
+valor = await tarea1.logs[0].args
